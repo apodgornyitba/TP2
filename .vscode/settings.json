@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "libc.h": "c",
+        "syscalls.h": "c",
+        "timer.h": "c",
+        "font.h": "c"
+    }
+}
