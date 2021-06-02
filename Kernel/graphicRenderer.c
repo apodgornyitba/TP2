@@ -63,6 +63,7 @@ int getWidth()
 	return width;
 }
 
+//https://wiki.osdev.org/Drawing_In_Protected_Mode
 int renderPixel(unsigned int x, unsigned int y, unsigned int color)
 {
 	if (x < 0 || y < 0 || x > width || y > height)

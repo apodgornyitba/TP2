@@ -23,7 +23,7 @@ int putChar(char c,unsigned int color){
 
     if (c=='\n'||c==ENTER_KEY){ //newline
         newLine();
-        return 1;
+        return 1; 
     }
     if (c=='\b') //backspace
     {
