@@ -4,6 +4,7 @@ GLOBAL scClear
 GLOBAL DateTime
 GLOBAL getMem
 GLOBAL getRegs
+GLOBAL changeScreen
 GLOBAL opCodeExc
 
 ; read - lee de un fd determinado
@@ -142,6 +143,23 @@ getRegs:
     pop rsi
     pop rdi
     
+    leave
+    ret
+
+changeScreen:
+    push rbp
+    mov rbp,rsp
+
+    push rdi
+    push rsi
+
+    mov rsi,rdi
+    mov rdi, 6
+    int 80h
+
+    pop rsi
+    pop rdi
+
     leave
     ret
 

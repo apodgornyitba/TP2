@@ -78,7 +78,16 @@ int renderPixel(unsigned int x, unsigned int y, unsigned int color)
 int renderArea(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2, unsigned int color){
 	if (x2<x1 || y2<y1)
 		return -1;
-	if (x1 < 0 || y1 < 0 || x2 > width || y2 > height)
+	if(getCurrentScreen() == 1){
+		if ( x1 < 0 || x2 > (width / 2 - 2) ){
+			return -2;
+		}
+	} else if (getCurrentScreen() == 2){
+		if ( x1 < 515 || x2 > width ){
+			return -2;
+		}
+	}
+	if (y1 < 0 || y2 > height)
 		return -2;
 	for (int i=x1;i<=x2;i++){
 		for (int j=y1;j<=y2;j++)
@@ -90,9 +99,18 @@ int renderArea(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y
 //LINK DE APOYO: https://jared.geek.nz/2014/jan/custom-fonts-for-microcontrollers
 int renderChar(unsigned char c, unsigned int x, unsigned int y, unsigned int color)
 {
-	if (x < 0 || y < 0 || x + (ABS_WIDTH) > width || y + (ABS_HEIGHT) > height)
+	if(getCurrentScreen() == 1){
+		if (x < 0 || x + (ABS_WIDTH) > (width / 2 - 2)) {
+			return -1;
+		}
+	} else if (getCurrentScreen() == 2){
+		if (x < 515  || x + (ABS_WIDTH) > width) {
+			return -1;
+		}
+	}
+	if (y < 0 || y + (ABS_HEIGHT) > height) {
 		return -1;
-
+	}
 	// 'font' es un arreglo multidimensional de [96][FONT_WIDTH]
 	// que es un arreglo 1D de tamano 96*FONT_WIDTH.
 	const uint8_t *chr = charBitmap(c);
@@ -110,26 +128,59 @@ int renderChar(unsigned char c, unsigned int x, unsigned int y, unsigned int col
 }
 
 void clearAll(){
-	char *pos = (char *)((uint64_t)screenData->framebuffer);
-	for (int i=0;i<height*width*3;i++)
-		pos[i]=0;
-
+	int curScreen = getCurrentScreen();
+	if (curScreen == 1) {
+		for (int x = 0; x < width /2 -2; x++) {
+			for (int y = 0; y < height; y++)
+			{
+				renderPixel(x,y,0x000000);
+			}
+		}	
+	} else if (curScreen == 2) {
+		for (int x = 515; x < width; x++) {
+			for (int y = 0; y < height; y++)
+			{
+				renderPixel(x, y, 0x000000);
+			}
+		}	
+	}
 }
 
-int scrollUp(int pixels){
-	if (pixels>height){
+int scrollUp(int pixels) {
+
+	if (pixels > height) {
 		clearAll();
 		return -1;
 	}
+
 	char *pos = (char *)((uint64_t)screenData->framebuffer);
-	for (int i = 0; i < width; i++){
-		for (int j=0;j<height-pixels;j++){
-			for (int k=0;k<3;k++){ // per color
+	int curScreen = getCurrentScreen();
+
+	if(curScreen == 1){
+		for (int i = 0; i < height; i++){
+			for (int j = 0; j < width/2 - 2; j++){
+				*pos = *(pos + (pixels * (width / 2 - 2)) * 3);
+				pos++;
+			}
+		}
+		renderArea(0, height-pixels, ( (width / 2) - 2), height, 0x000000);
+	} else if (curScreen == 2) {
+		for (int i = 0; i < height; i++){
+			for (int j = 515; j < width; j++){
 				*pos = *(pos + (pixels * width) * 3);
 				pos++;
 			}
 		}
+		renderArea(0, height-pixels, width, height, 0x000000);
 	}
-	renderArea(0,height-pixels,width,height,0x000000);
 	return 0;
+}
+
+
+void separateMainScreen() {
+      for (int y = 0; y < height; y++) {
+            for (int x = 0; x < ABS_WIDTH / 2; x++) {
+                  renderPixel(width / 2 - ABS_WIDTH + x, y, 0xFFFFFF);
+            }
+      }
 }

@@ -72,3 +72,7 @@ uint64_t sysRead(uint64_t fd, uint64_t buffer, uint64_t length, uint64_t r8, uin
     return dumpBuffer(buff,length);
 
 }
+
+uint64_t sysChangeScreen(uint64_t screen, uint64_t rdx, uint64_t rcx, uint64_t r8, uint64_t r9){
+    return changeScreen(screen);
+}

@@ -117,7 +117,6 @@ int main()
 
 	ncPrint("[Finished]");
 	ncClear();
-
-
+	
 	return 0;
 }

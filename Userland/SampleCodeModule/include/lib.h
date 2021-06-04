@@ -10,6 +10,7 @@ void scClear();
 int DateTime(int selector);
 int getMem(unsigned char *buff, unsigned long long address, int bytes);
 int getRegs(unsigned long long* arr);
+int changeScreen(int screen);
 void opCodeExc(void);
 
 #endif

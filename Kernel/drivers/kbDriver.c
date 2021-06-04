@@ -1,6 +1,7 @@
 #include <kbDriver.h>
 #include <lib.h>
 #include <syscalls.h>
+#include <screenDriver.h>
 
 //Resource: https://www.cs.umd.edu/~hollings/cs412/s98/project/proj1/index.html
 #define ESC 27 /* ASCII escape */
@@ -12,8 +13,7 @@
 #define CAPSLOCK 0x3A
 #define CAPSLOCK_RELEASED 0xBA
 #define CTRL 0x1D
-#define BACKSPACE 8 /* Ascii codes for Backspace, Tab and enter keys.*/
-#define TAB 9       
+#define BACKSPACE 8 /* Ascii codes for Backspace, Tab and enter keys.*/       
 #define ENTER_KEY 13
 
 #define TRUE 1
@@ -36,7 +36,7 @@ char scanToAscii[58][2] = /* Array containing ascii codes for appropriate scan c
         {'-', '_'},
         {'=', '+'},
         {8, 8},
-        {9, 9},
+        {'\t', '\t'},
         {'q', 'Q'},
         {'w', 'W'},
         {'e', 'E'},
@@ -112,6 +112,7 @@ void keyboardHandler(uint64_t rsp)
             capsEnabled = 1 - capsEnabled;
             return;
         }
+        
         if (keyCode >= 58 || keyCode & 0X80) //No tiene representacion ascii y no es una tecla levantandose
             return;
 

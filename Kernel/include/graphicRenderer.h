@@ -2,8 +2,7 @@
 #define GRAPHIC_RENDERER_H
 
 #include <stdint.h>
-
-// #define BG_COLOR 0x000000
+#include <screenDriver.h>
 
 void initRenderer(long int infoLoc);
 int getHeight();
@@ -13,5 +12,6 @@ int renderPixel(unsigned int x, unsigned int y, unsigned int color);
 int renderChar(unsigned char c, unsigned int x, unsigned int y, unsigned int color);
 void clearAll();
 int scrollUp(int pixels);
+void separateMainScreen();
 
 #endif

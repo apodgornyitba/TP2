@@ -3,6 +3,11 @@
 #include <libc.h>
 
 static const char *registers[] = {"RAX:", "RBX:", "RCX:", "RDX:", "RBP:", "RDI:", "RSI:", "R8 :", "R9 :", "R10:", "R11:", "R12:", "R13:", "R14:", "R15:"};
+static int currentScreen = 1;
+
+#define LEFT 1
+#define RIGHT 2
+
 void getHelp();
 void printMem(char *hexa);
 void printRegisters();
@@ -20,6 +25,15 @@ void shellMain(){
         scanf("%s %s",command,param);
         if (strcmp(command,"HELP") == 0)
             getHelp();
+        else if(command[0] == '\t'){
+            if (currentScreen == LEFT){
+                changeScreen(2);
+                currentScreen = RIGHT;
+            } else if (currentScreen == RIGHT){
+                changeScreen(1);
+                currentScreen = LEFT;
+            }
+        }
         else if (strcmp(command,"DATETIME")==0)
             printDateTime();
         else if(strcmp(command,"CLEAR")==0)
@@ -73,20 +87,22 @@ void printRegisters(){
 }
 
 void getHelp() {
-    printf("\nHELP: Informacion de comandos.\n");
-    printf("DATETIME: Se imprime el tiempo y la fecha actual.\n");
-    printf("CLEAR: Se limpia la pantalla.\n");
-    printf("PRINTMEM: Volcado de memoria de 32 bytes desde la direccion dada.\n");
-    printf("INFOREG: Se imprimen los valores de los registros.\n");
-    printf("DIVEX: Para lanzar una excepcion por division por cero.\n");
-    printf("OPEX: Para lanzar una excepción por operador de codigo invalido.\n");
-    printf("EXIT: Abortar la ejecucion.\n");
+    printf("\n~ HELP: Informacion de comandos.\n");
+    printf("~ DATETIME: Se imprime el tiempo y la fecha actual.\n");
+    printf("~ CLEAR: Se limpia la pantalla.\n");
+    printf("~ PRINTMEM: Volcado de memoria de 32 bytes desde la direccion dada.\n");
+    printf("~ INFOREG: Se imprimen los valores de los registros.\n");
+    printf("~ DIVEX: Para lanzar una excepcion por division por cero.\n");
+    printf("~ OPEX: Para lanzar una excepción por operador de codigo invalido.\n");
+    printf("~ EXIT: Abortar la ejecucion.\n");
     printf("\n");
 }
 
 void printDateTime() {
    printf("%d:%d:%d\n%d\\%d\\%d\n", DateTime(2), DateTime(1), DateTime(0),DateTime(3),DateTime(4),DateTime(5));
 }
+
+
 
 void divExc(){
     int a = 1, b = 0;
