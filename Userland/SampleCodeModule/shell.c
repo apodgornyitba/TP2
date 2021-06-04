@@ -3,10 +3,10 @@
 #include <libc.h>
 
 static const char *registers[] = {"RAX:", "RBX:", "RCX:", "RDX:", "RBP:", "RDI:", "RSI:", "R8 :", "R9 :", "R10:", "R11:", "R12:", "R13:", "R14:", "R15:"};
-static int currentScreen = 1;
+/*static int currentScreen = 1;
 
 #define LEFT 1
-#define RIGHT 2
+#define RIGHT 2*/
 
 void getHelp();
 void printMem(char *hexa);
@@ -14,26 +14,32 @@ void printRegisters();
 void printDateTime();
 void divExc();
 
-void shellMain(){
-    char command[120] = {0};
-    char param[120] = {0};
-    while (1)
-    {
-        printf("$ > ");
-        command[0]=0;
-        param[0]=0;
-        scanf("%s %s",command,param);
+void initialize() {
+    scClear();
+    printf("Que modulo desea correr? Para conocer los comandos habilitados, escriba HELP\n");
+	printf("Presionar TAB y enter para cambiar de pantalla.\n");
+}
+
+void shellMain(char *command, char *param, int * esc){
+    // char command[120] = {0};
+    // char param[120] = {0};
+    // while (1)
+    // {
+        //printf("$ > ");
+        // command[0]=0;
+        // param[0]=0;
+        // scanf("%s %s",command,param);
         if (strcmp(command,"HELP") == 0)
             getHelp();
-        else if(command[0] == '\t'){
+        /*else if(command[0] == '\t'){
             if (currentScreen == LEFT){
-                changeScreen(2);
                 currentScreen = RIGHT;
+                changeScreen(2);
             } else if (currentScreen == RIGHT){
-                changeScreen(1);
                 currentScreen = LEFT;
+                changeScreen(1);
             }
-        }
+        }*/
         else if (strcmp(command,"DATETIME")==0)
             printDateTime();
         else if(strcmp(command,"CLEAR")==0)
@@ -50,10 +56,12 @@ void shellMain(){
             divExc();
         else if(strcmp(command,"OPEX")==0)
             opCodeExc();
-        else if (strcmp(command, "EXIT") == 0)
+        else if (strcmp(command, "EXIT") == 0){
+            *esc = 1;
             return;
+        }
         else printf("Comando invalido.\n Escriba HELP para mas informacion.\n");  
-    }
+    // }
     return;
 }
 

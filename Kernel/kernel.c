@@ -117,6 +117,7 @@ int main()
 
 	ncPrint("[Finished]");
 	ncClear();
+	separateMainScreen();
 	
 	return 0;
 }

@@ -2,5 +2,6 @@
 #define SHELL_H
 
 void shellMain();
+void initialize();
 
 #endif

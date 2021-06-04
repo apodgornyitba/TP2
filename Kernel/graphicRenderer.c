@@ -79,7 +79,7 @@ int renderArea(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y
 	if (x2<x1 || y2<y1)
 		return -1;
 	if(getCurrentScreen() == 1){
-		if ( x1 < 0 || x2 > (width / 2 - 2) ){
+		if ( x1 < 0 || x2 > (width / 2 - 8) ){
 			return -2;
 		}
 	} else if (getCurrentScreen() == 2){
@@ -100,7 +100,7 @@ int renderArea(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y
 int renderChar(unsigned char c, unsigned int x, unsigned int y, unsigned int color)
 {
 	if(getCurrentScreen() == 1){
-		if (x < 0 || x + (ABS_WIDTH) > (width / 2 - 2)) {
+		if (x < 0 || x + (ABS_WIDTH) > (width / 2 - 8)) {
 			return -1;
 		}
 	} else if (getCurrentScreen() == 2){
@@ -130,7 +130,7 @@ int renderChar(unsigned char c, unsigned int x, unsigned int y, unsigned int col
 void clearAll(){
 	int curScreen = getCurrentScreen();
 	if (curScreen == 1) {
-		for (int x = 0; x < width /2 -2; x++) {
+		for (int x = 0; x < width /2 - 8; x++) {
 			for (int y = 0; y < height; y++)
 			{
 				renderPixel(x,y,0x000000);
@@ -158,12 +158,12 @@ int scrollUp(int pixels) {
 
 	if(curScreen == 1){
 		for (int i = 0; i < height; i++){
-			for (int j = 0; j < width/2 - 2; j++){
-				*pos = *(pos + (pixels * (width / 2 - 2)) * 3);
+			for (int j = 0; j < width/2 - 8; j++){
+				*pos = *(pos + (pixels * (width / 2 - 8)) * 3);
 				pos++;
 			}
 		}
-		renderArea(0, height-pixels, ( (width / 2) - 2), height, 0x000000);
+		renderArea(0, height-pixels, ( (width / 2) - 8), height, 0x000000);
 	} else if (curScreen == 2) {
 		for (int i = 0; i < height; i++){
 			for (int j = 515; j < width; j++){

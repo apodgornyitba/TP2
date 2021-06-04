@@ -15,11 +15,11 @@ static int currentScreen = 1;
 void initVideo(){
     initRenderer(0x5C00);
     //Determino los limites redondeados del posicionamiento de caracteres (para saber donde volver despues de un \b)
-    max1X = (getWidth()/2) - 2;
+    max1X = (getWidth()/2) - 8;
     max2X = getWidth();
     maxY = getHeight();
     cleanScreen();
-    // separateMainScreen();
+    separateMainScreen();
 }
 
 int changeScreen(int screen) { 
@@ -70,7 +70,7 @@ void newLine(){
         }
     }else if(currentScreen == 2){
         Pos2X = 515;
-        currentScreen += scrollDist;
+        Pos2Y += scrollDist;
         if (Pos2Y >= maxY) {
             scrollUp(scrollDist);
             Pos2Y = maxY - scrollDist;
