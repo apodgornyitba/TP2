@@ -63,6 +63,11 @@ int getWidth()
 	return width;
 }
 
+int getColor(int x, int y) {
+	char * pos = (char *)((uint64_t)screenData->framebuffer + (x + y * width) * 3);
+	return ((pos[2] & 0xff) << 16) + ((pos[1] & 0xff) << 8) + (pos[0] & 0xff);
+}
+
 //https://wiki.osdev.org/Drawing_In_Protected_Mode
 int renderPixel(unsigned int x, unsigned int y, unsigned int color)
 {
@@ -153,22 +158,26 @@ int scrollUp(int pixels) {
 		return -1;
 	}
 
-	char *pos = (char *)((uint64_t)screenData->framebuffer);
+	// char *pos = (char *)((uint64_t)screenData->framebuffer);
 	int curScreen = getCurrentScreen();
 
 	if(curScreen == 1){
-		for (int i = 0; i < height; i++){
-			for (int j = 0; j < width/2 - 8; j++){
-				*pos = *(pos + (pixels * (width / 2 - 8)) * 3);
-				pos++;
+		// 
+		for (int y = 0; y < height; y++){
+			for (int x = 0; x < width/2 - 8; x++){
+				int color = getColor(x, y);
+				renderPixel(x, y, getColor(x, y + ABS_HEIGHT));
+				renderPixel(x, y + ABS_HEIGHT, color);
 			}
 		}
 		renderArea(0, height-pixels, ( (width / 2) - 8), height, 0x000000);
 	} else if (curScreen == 2) {
-		for (int i = 0; i < height; i++){
-			for (int j = 515; j < width; j++){
-				*pos = *(pos + (pixels * width) * 3);
-				pos++;
+		// 
+		for (int y = 0; y < height; y++){
+			for (int x = 515; x < width; x++){
+				int color = getColor(x, y);
+            	renderPixel(x, y, getColor(x, y + ABS_HEIGHT));
+            	renderPixel(x, y + ABS_HEIGHT, color);
 			}
 		}
 		renderArea(0, height-pixels, width, height, 0x000000);
