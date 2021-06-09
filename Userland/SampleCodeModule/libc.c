@@ -62,9 +62,21 @@ int putChar(char c){
     return write(1,buff,2);
 }
 
-int readLn()
+//LINK DE APOYO: //https://iq.opengenus.org/how-printf-and-scanf-function-works-in-c-internally/
+int scanf(const char *format, ...)
 {
+    va_list args;
+    va_start(args, format);
+
+    clearBuff();
+    
     int c;
+    int fmtIdx = 0;
+    int bufferIdx=0;
+    int flag = 0;
+
+    char *auxStr;
+    int auxNum =0;
 
     while ((c = getChar()) != '\n' )
     {
@@ -87,23 +99,7 @@ int readLn()
     }
     putChar('\n');
     buffer[buffSize++] = '\0';
-    return buffSize;
-}
-
-//LINK DE APOYO: //https://iq.opengenus.org/how-printf-and-scanf-function-works-in-c-internally/
-int scanf(const char *format, ...)
-{
-    va_list args;
-    va_start(args, format);
-
-    clearBuff();
-    readLn();
-    int fmtIdx = 0;
-    int bufferIdx=0;
-    int flag = 0;
-
-    char *auxStr;
-    int auxNum =0;
+    
     while (format[fmtIdx] != '\0' &&  buffer[bufferIdx] != '\0' && !flag)
     {
         if (format[fmtIdx] != '%')

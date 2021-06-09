@@ -14,7 +14,6 @@ static int currentScreen = 1;
 
 void initVideo(){
     initRenderer(0x5C00);
-    //Determino los limites redondeados del posicionamiento de caracteres (para saber donde volver despues de un \b)
     max1X = (getWidth()/2) - 8;
     max2X = getWidth();
     maxY = getHeight();

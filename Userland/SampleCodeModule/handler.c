@@ -9,6 +9,7 @@ static int esc = 0;
 #define RIGHT 2
 
 void handler(){
+
 	changeScreen(RIGHT);
 	initialize();
 	changeScreen(LEFT);
@@ -16,11 +17,14 @@ void handler(){
 
     char command[120] = {0};
     char param[120] = {0};
+
     while(!esc){
+
         command[0]=0;
         param[0]=0;
         printf("$ > ");
         scanf("%s %s",command,param);
+        
         if(command[0] == '\t'){
             if (currentScreen == LEFT){
                 currentScreen = RIGHT;

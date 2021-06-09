@@ -22,7 +22,7 @@
 int DateTime(unsigned int selector);
 int RTC(unsigned int rtcSelector);
 
-long int getNormSecsInDay(void);
+long int getSecs(void);
 void hold(int secs);
 
 #endif

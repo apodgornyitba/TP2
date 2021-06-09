@@ -89,7 +89,7 @@ void * initializeKernelBinary()
 	ncClear();
 
 	//NUESTROS INITS
-	initVideo(0x0000000000005C00);
+	initVideo();
 	initKb();
 	load_idt();
 
@@ -117,7 +117,6 @@ int main()
 
 	ncPrint("[Finished]");
 	ncClear();
-	separateMainScreen();
 	
 	return 0;
 }

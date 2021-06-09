@@ -99,7 +99,7 @@ DateTime:
     leave
     ret
 
-;getMem - recibe el valor de memoria en un vecctor
+;getMem - recibe el valor de memoria en un vector
 ;IN- RDI - buffer
 ;    RSI - address
 ;    RDX - bytes
@@ -126,7 +126,7 @@ getMem:
     leave
     ret
     
-;getRegs - abtiene el valor de los 15 registros
+;getRegs - obtiene el valor de los 15 registros
 ;IN - RDI buffer
 getRegs:
 
@@ -146,6 +146,8 @@ getRegs:
     leave
     ret
 
+;changeScreen - Cambia de pantalla
+;IN- RDI - screen
 changeScreen:
     push rbp
     mov rbp,rsp
@@ -163,6 +165,7 @@ changeScreen:
     leave
     ret
 
+;opCodeExc - Programa de prueba para excepcion de operacion invalido 
 opCodeExc:
     UD2
     ret

@@ -26,19 +26,18 @@ int DateTime(unsigned int selector)
     }
 }
 
-long int getNormSecsInDay(){
+long int getSecs(){
     return DateTime(0)+DateTime(1)*60+ DateTime(2)*3600+DateTime(3);
 }
 
 //Espera unos segs determinados
-//IMPLEMENTACION RUDIMENTARIA
 void hold(int secs){
     long int initTime,currTime;
     long int timeDif=0;
     int passedDays =0;
-    initTime = currTime = getNormSecsInDay();
+    initTime = currTime = getSecs();
     while(1){
-        currTime = getNormSecsInDay();
+        currTime = getSecs();
         timeDif = currTime - initTime + (passedDays * 86400);
         if (timeDif<0){ //Paso un dia
             passedDays++;

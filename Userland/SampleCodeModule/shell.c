@@ -17,7 +17,6 @@ void initialize() {
 }
 
 void shellMain(char *command, char *param, int * esc){
-
         if (strcmp(command,"HELP") == 0)
             getHelp();
         else if (strcmp(command,"DATETIME")==0)
